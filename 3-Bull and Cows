@@ -1,0 +1,32 @@
+class Solution {
+public:
+    string getHint(string secret, string guess) {
+      unordered_map<char,int>mp;int bull=0,cows=0;
+      for(int i=0;i<secret.size();i++)
+      {
+          if(secret[i]==guess[i]) bull++;
+      }  
+     for(int i=0;i<secret.size();i++)
+      {
+         mp[secret[i]]++;
+      }
+       
+       for(int i=0;i<guess.size();i++)
+       {
+           if(mp.find(guess[i])!=mp.end())
+           {     
+               if(mp[guess[i]]>0){
+                 mp[guess[i]]--;             
+                   cows++;//1
+               }
+           }
+       }
+        cows=abs(cows-bull);
+    //    cout<<bull<<" "<<cows;
+       string s=to_string(bull);
+       s+='A';
+       s+=to_string(cows);
+       s+='B';
+       return s;
+    }
+};
