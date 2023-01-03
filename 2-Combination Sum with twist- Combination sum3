@@ -1,0 +1,30 @@
+class Solution {
+    void findNumbers(int ind,int k,int target,vector<int> &ds,vector<vector<int>> &res)
+    {
+        if(k ==ds.size())
+        {
+            if(target==0)
+               res.push_back(ds);
+               return;
+        }
+
+        for(int i=ind;i<=9;i++)
+        {
+            if(i>target) break;
+
+            ds.push_back(i);
+               findNumbers(i+1,k,target-i,ds,res);
+            ds.pop_back();
+        }
+
+
+    }
+public:
+    vector<vector<int>> combinationSum3(int k, int n)
+    {
+             vector<int > ds;
+             vector<vector<int>>res;
+             findNumbers(1,k,n,ds,res);
+             return res;
+    }
+};
