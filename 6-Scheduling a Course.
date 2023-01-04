@@ -1,0 +1,100 @@
+class Solution {
+public:
+    /// CYCLE DETECTION ALGORITHM
+    bool isCycle(
+int node,vector<int>adj[], vector<int>&vis, vector<int>&dfsVis)
+    {
+    
+        vis[node]=true;
+        
+        dfsVis[node]=true;
+        
+        for(auto nbr:adj[node])
+        {
+            if(!vis[nbr])
+            {
+                
+              if(isCycle(nbr,adj,vis,dfsVis))                        
+                  return true;
+            }
+            else if(dfsVis[nbr]){
+                return true;
+            }
+            
+        }
+        
+        dfsVis[node]=false;
+        return false;
+        
+    }
+    
+     bool cycleBFS(int V,vector<int>adj[])
+    {
+      vector<int> indeg(V,0);
+	   for(int i=0;i<V;i++)
+	   {
+	       for(auto nbr:adj[i])
+	       {
+	           indeg[nbr]++;
+	       }
+	   }
+	   queue<int> q;
+	   vector<int> topo;
+	   
+	   for(int i=0;i<V;i++)
+	   {
+	       if(indeg[i]==0)
+	         q.push(i);
+	   }
+	   
+	   while(!q.empty())
+	   {
+	       int node=q.front();
+	       q.pop();
+	       topo.push_back(node);
+	       
+	       for(auto nbr:adj[node])
+	       {
+	           indeg[nbr]--;
+	           if(indeg[nbr]==0)
+	              q.push(nbr);
+	       }
+	   }
+	   if(topo.size()==V)
+	      return true;
+	   return false;
+    }
+    
+    
+    bool canFinish(int n, vector<vector<int>>& pre) {
+        vector<int> adj[n];
+        //adj prepare
+        for(auto i:pre)
+        {
+            // for(int j=0;j<2;j++)
+            // {
+                adj[i[0]].push_back(i[1]);
+           
+        }
+        
+        ///DFS 
+        
+//         vector<int > vis(n,0);
+//         vector<int> dfsVis(n,0);
+   
+//         for(int i=0;i<n;i++)
+//         {
+//             if(!vis[i])
+//             {
+//                if( isCycle(i,adj,vis,dfsVis))
+//                 return false;
+//             }
+//         }
+        
+//         return true;
+        
+        ///??? BFS TopoSort Kahn's algo
+         return (cycleBFS(n,adj));
+          
+    }
+};
