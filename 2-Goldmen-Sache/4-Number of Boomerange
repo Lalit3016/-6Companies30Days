@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int numberOfBoomerangs(vector<vector<int>>& p) {
+        int n=p.size();
+         int result=0;
+        for(int i=0;i<n;i++)
+        {
+            unordered_map<int,int>mp;
+            for(int j=0;j<n;j++)
+            {
+                int d=((p[i][0]-p[j][0])*(p[i][0]-p[j][0]) + (p[i][1]-p[j][1])*(p[i][1]-p[j][1]) );
+                mp[d]++;
+            }
+
+        for(auto x:mp)
+        {
+            // cout<<x.first<<" "<<x.second<<endl;
+            if(x.second)
+            {
+                result+=(x.second*(x.second-1));
+            }
+         }
+        }// O(N)^2
+     return result;
+    }
+};
